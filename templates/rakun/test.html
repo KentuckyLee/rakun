@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif  %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+    {{ message }}
+    </div>
+    {% endfor %}
+    <p>status: {{status}}</p>
+    <p>phone_number : {{phone_number}}</p>
+    <p>phone_replace : {{phone_replace}}</p>
+    <p>mail : {{mail}}</p>
+    <p>company : {{company}}</p>
+    <p>owner_name : {{owner_name}}</p>
+    <p>conf_send_mail_check : {{conf_send_mail_check}}</p>
+    <p>newsletter_send_mail_check : {{newsletter_send_mail_check}}</p>
+    <p>password : {{password}}</p>
+    <p>credit : {{credit}}</p>
+    <p>credits_price: {{credits_price}} TL</p>
+    <p>credits_price_date : {{credits_price_date}}</p>
+    <p>credits_expiration_date : {{credits_expiration_date}}</p>
+    <p>created_date : {{created_date}}</p>
+    <p>image_url: {{image_url}}</p>
+    <p>country: {{country}}</p>
+    <p>city: {{city}}</p>
+    <p>district: {{district}}</p>
+
+
+
+</body>
+</html>
