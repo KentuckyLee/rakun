@@ -48,7 +48,7 @@ def register(request):
                 Q('match_phrase', status=2)
             )
             response = result.execute()
-            if response.hits.total > 0:  # Sisteme daha önceden kayıt yapldığı durum
+            if response.hits.total != 0:  # Sisteme daha önceden kayıt yapldığı durum
                 messages.warning(request, 'Uyarı! Sistemde daha önce kaydınız bulunmaktadır.')
                 return render(request, 'rakun/loginorregister.html')
 
