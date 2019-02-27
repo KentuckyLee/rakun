@@ -30,7 +30,49 @@
     <p>city: {{city}}</p>
     <p>district: {{district}}</p>
 
+    {{query}}
+    <!--{% for q in query %}-->
+        <!--<p>q : {{query}}</p>-->
+    <!--{%endfor%}-->
+
+    <!--{% for q in query %}-->
+        <!--<p>q : {{q}}</p>-->
+        <!--<p>phone_number: {{q.phone_number}}</p>-->
+        <!--<p>mail: {{q.mail}}</p>-->
+        <!--{% for i in q %}-->
+            <!--{{i}}-->
+
+        <!--<hr>-->
+        <!--{%endfor%}-->
+    <!--{%endfor%}-->
+
 
 
 </body>
 </html>
+
+
+
+
+<!--index="my-index",-->
+    <!--body={-->
+      <!--"query": {-->
+        <!--"filtered": {-->
+          <!--"query": {-->
+            <!--"bool": {-->
+              <!--"must": [{"match": {"title": "python"}}],-->
+              <!--"must_not": [{"match": {"description": "beta"}}]-->
+            <!--}-->
+          <!--},-->
+          <!--"filter": {"term": {"category": "search"}}-->
+        <!--}-->
+      <!--},-->
+      <!--"aggs" : {-->
+        <!--"per_tag": {-->
+          <!--"terms": {"field": "tags"},-->
+          <!--"aggs": {-->
+            <!--"max_lines": {"max": {"field": "lines"}}-->
+          <!--}-->
+        <!--}-->
+      <!--}-->
+    <!--}-->
