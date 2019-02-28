@@ -5,22 +5,24 @@ from django.db import models
 #  Register Model
 
 
-class Test(models.Model):
+class TestCompanies(models.Model):
 
-    phone_number =models.CharField(max_length=10)  # Telefon numarası
+    phone_number = models.CharField(max_length=10)  # Telefon numarası
     company = models.CharField(max_length=50)  # Anaokulu ismi
-    password = models.CharField(max_length=16)  # Şifre
-    owner = models.CharField(max_length=50)  # Kurucu İsmi
+    # password = models.CharField(max_length=16)  # Şifre
+    owner_name = models.CharField(max_length=50)  # Kurucu İsmi
+    owner_surname = models.CharField(max_length=50)  # Kurucu İsmi
     mail = models.CharField(max_length=50)  # Mail adresi
     credit = models.IntegerField()   # Satın alınan kredi
     credits_price = models.IntegerField()  # Ödenecek Tutar
-    credits_price_date = models.DateTimeField(auto_now_add=False)  # Kredş satın alma tarihi
+    credits_price_date = models.DateTimeField(auto_now_add=False, null=True)  # Kredş satın alma tarihi
     credits_expiration_date = models.DateTimeField(auto_now_add=False)  # Kredinin sonlanma tarihi
-    image_url = models.FileField(blank=True, null=True)  # Owner profil resmi
+    # image_url = models.FileField(blank=True, null=True)  # Owner profil resmi
     country = models.CharField(max_length=30, blank=True)  # Ülke
     city = models.CharField(max_length=30, blank=True)  # Şehir
     district = models.CharField(max_length=30, blank=True)  # Semt
-    created_date = models.DateTimeField(auto_now_add=False)  # Kayıt tarih
+    created_date = models.DateTimeField(auto_now_add=False, blank=True)  # Kayıt tarih
+    update_date = models.DateTimeField(auto_now_add=False, blank=True)  # Güncelleme tarihi
     #  Kullanıcı statu bilgisi sisteme ilk kayıt olan kullanıcılar pasif statusunde kayıt edilir.
     DELETED = 0
     ACTIVE = 1

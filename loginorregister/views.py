@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from django.contrib.auth.base_user import BaseUserManager
-from loginorregister.document import TestDocument
+from loginorregister.document import TestCompaniesDocument
 from elasticsearch_dsl.query import Q
 from datetime import datetime
 from dateutil.relativedelta import *
@@ -21,20 +21,22 @@ def register(request):
     else:  # Post işlemi başarılı durumu
         phone_number = request.POST.get('phone_number')
         phone_replace = request.POST.get('phone_replace')
-        mail = request.POST.get('mail')
         company = request.POST.get('company')
         owner_name = request.POST.get('owner_name')
-        password = BaseUserManager().make_random_password(6)
+        owner_surname = request.POST.get('owner_surname')
+        mail = request.POST.get('mail')
+        credit = 3
         credits_price = 0
         credits_price_date = datetime.now()
         credits_expiration_date = datetime.now() + relativedelta(months=+1)
-        created_date = datetime.now()
-        status = 2
-        credit = 3
-        image_url = 'default'
         country = 'default'
         city = 'default'
         district = 'default'
+        created_date = datetime.now()
+        update_date = datetime.now()
+        status = 2
+        password = BaseUserManager().make_random_password(6)
+        image_url = 'default'
 
         if phone_number != phone_replace:  # Telefon numaralarının eşit olmadığı durum
             messages.warning(request, 'Girdiğiniz telefon numaraları eşleşmemektedir.')
@@ -42,8 +44,8 @@ def register(request):
 
         else:  # Telefon numaraların eşit olduğu durum
             # Telefon numarası ve mail adresi bulunan aktif kullanıcı
-            result = TestDocument.search().query(
-                Q('match_phrase', mail=mail) &
+            result = TestCompaniesDocument.search().query(
+                Q('match_phrase', mail=mail) |
                 Q('match_phrase', phone_number=phone_number) &
                 Q('match_phrase', status=2)
             )
@@ -54,21 +56,23 @@ def register(request):
 
             else:  # Sisteme yeni anaokul kaydı yapılacak
                 # Yeni anaokulu ve Kullanıcı bilgisi Eklenir
-                new_company = TestDocument(
+                new_company = TestCompaniesDocument(
                     phone_number=phone_number,
                     company=company,
-                    password=password,
-                    owner=owner_name,
+                    # password=password,
+                    owner_name=owner_name,
+                    owner_surname=owner_surname,
                     mail=mail,
                     credit=credit,
                     credits_price=credits_price,
                     credits_price_date=credits_price_date,
                     credits_expiration_date=credits_expiration_date,
-                    image_url=image_url,
+                    # image_url=image_url,
                     country=country,
                     city=city,
                     district=district,
                     created_date=created_date,
+                    update_date=update_date,
                     status=status
                 )
                 new_company.save()  # Kullanıcı kayıt edilir
@@ -85,8 +89,4 @@ def register(request):
 
 def login(request):
     pass
-
-
-
-
 

@@ -31,9 +31,9 @@
     <p>district: {{district}}</p>
 
     {{query}}
-    <!--{% for q in query %}-->
-        <!--<p>q : {{query}}</p>-->
-    <!--{%endfor%}-->
+    {% for q in query %}
+        <p>q : {{query}}</p>
+    {%endfor%}
 
     <!--{% for q in query %}-->
         <!--<p>q : {{q}}</p>-->
@@ -76,3 +76,7 @@
         <!--}-->
       <!--}-->
     <!--}-->
+
+
+ <!--def __init__(self, obj):-->
+        <!--self.__dict__ = json.loads(obj)-->

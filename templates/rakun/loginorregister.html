@@ -42,7 +42,7 @@
     <!-- Main content -->
     <div class="content-wrapper">
                     {% for message in messages %}
-                    <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " {% endif  %}>
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " style=opacity:0.9 {% endif  %}>
                         {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
                         {{ message }}
                     </div>
@@ -155,6 +155,12 @@
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <input type="text" class="form-control" placeholder="İsminiz" required name="owner_name", id="owner_name">
+                                <div class="form-control-feedback">
+                                    <i class="icon-user text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <input type="text" class="form-control" placeholder="Soyisminiz" required name="owner_surname", id="owner_surname">
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
