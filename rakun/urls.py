@@ -20,5 +20,5 @@ from okulyazilimlari import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('okulyazilimlari.urls'),),
-    path('loginorregister/', include('loginorregister.urls')),
+    path('companies/', include('companies.urls')),
 ]

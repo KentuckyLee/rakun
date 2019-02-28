@@ -66,7 +66,7 @@
                             <h5 class="mb-0">Sisteme Giriş</h5>
                             <span class="d-block text-muted">Telefon numaranız ile sisteme giriş yapabilirsiniz.</span>
                         </div>
-                        <form class="login-form wmin-sm-400" action="{% url 'loginorregister:login' %}" method="POST">
+                        <form class="login-form wmin-sm-400" action="{% url 'companies:login' %}" method="POST">
                             {% csrf_token %}
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <input type="tel" class="form-control" placeholder="Cep Telefonunuz (545 xxx xxxx)", name="phone", id="login_phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>
@@ -130,7 +130,7 @@
                             <h5 class="mb-0">Anaokulu Hesabı Oluşturun</h5>
                             <span class="d-block text-muted">Tüm alanların doldurulması gerekmektedir.</span>
                         </div>
-                        <form class="login-form wmin-sm-400"  method="POST" action="{% url 'loginorregister:register'%}">
+                        <form class="login-form wmin-sm-400"  method="POST" action="{% url 'companies:register'%}">
                             {% csrf_token %}
                             <div class="form-group form-group-feedback form-group-feedback-left">
                                 <input type="tel" class="form-control" placeholder="Cep Telefonunuz (545 xxx xxxx)", name="phone_number", id="register_phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>

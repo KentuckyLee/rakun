@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from django.contrib.auth.base_user import BaseUserManager
-from loginorregister.document import TestDocument
+from companies.document import TestDocument
 from elasticsearch_dsl.query import Q
 from datetime import datetime
 from dateutil.relativedelta import *
@@ -12,7 +12,7 @@ from dateutil.relativedelta import *
 
 def index(request):
 
-    return render(request, 'rakun/loginorregister.html')
+    return render(request, 'rakun/companies.html')
 
 def register(request):
     if request.method == 'POST':  # Post işlemi başarılı durumu

@@ -1,5 +1,5 @@
 from django_elasticsearch_dsl import DocType, Index
-from loginorregister.models import TestCompanies
+from companies.models import TestCompanies
 
 test_companies = Index('test_companies')
 test_companies.settings(
