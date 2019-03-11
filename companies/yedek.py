@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from django.contrib.auth.base_user import BaseUserManager
-from companies.document import TestDocument
+from rakun_elastic.document import TestUsers,TestCompaniesDocument
 from elasticsearch_dsl.query import Q
 from datetime import datetime
 from dateutil.relativedelta import *
@@ -114,8 +114,73 @@ def register(request):
 def login(request):
     pass
 
+###########ElasticSearch Update Only one field
+#
+# client = Elasticsearch()
+# response = client.update_by_query(
+#     index="test_users",
+#     body={
+#         "query": {
+#             "bool": {
+#                 "must": [{"match_phrase": {"phone_number": "1478741369"}}]
+#             }
+#         },
+#         "script": {
+#             "inline": "ctx._source[params.field] = params.value",
+#             "params": {
+#                 "field": "password",
+#                 "value": "112358",
+#
+#             },
+#         }
+#     },
+# )
+#
+#
+# "query": {
+#     "bool": {
+#         "should": [{
+#             "match_phrase": {
+#                 "phone_number": phone_number,
+#
+#             }
+#         }, {
+#             "match_phrase": {
+#                 "status": 2
+#             }
+#         }]
+#     }
+# },
 
-
-
-
+#################### multi query
+# client = Elasticsearch()
+#             response = client.update_by_query(
+#                 index="test_users",
+#                 body={
+#                     "query": {
+#                         "bool": {
+#                             "should": [
+#                                 {
+#                                     "match_phrase": {
+#                                         "password": "mj2y2h"
+#                                     }
+#                                 },
+#                                 {
+#                                     "match_phrase": {
+#                                         "password": "UE4gJM"
+#                                     }
+#                                 }
+#                             ]
+#                         }
+#                     },
+#                     "script": {
+#                         "inline": "ctx._source[params.field] = params.value",
+#                         "params": {
+#                             "field": "user_surname",
+#                             "value": "Aynı isim",
+#
+#                         },
+#                     }
+#                 },
+#             )
 

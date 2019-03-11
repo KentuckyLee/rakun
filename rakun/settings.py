@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
     'okulyazilimlari',
     'companies',
+    'personnel',
+    'rakun_elastic',
+    'notifications',
+    'dashboard'
 ]
 
 MIDDLEWARE = [
