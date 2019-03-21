@@ -2,9 +2,16 @@ from django_elasticsearch_dsl import DocType, Index
 from companies.models import TestCompanies
 from personnel.models import TestPersonnel
 from notifications.models import TestNotifications
+from users.models import TestUsers
 
 
 test_companies = Index('test_companies')
+test_companies.settings(
+    number_of_shards=1,
+    number_of_replicas=0
+)
+
+test_users = Index('test_users')
 test_companies.settings(
     number_of_shards=1,
     number_of_replicas=0
@@ -32,21 +39,39 @@ class TestCompaniesDocument(DocType):
 
         fields = [
             'phone_number',
-            'company_id',
             'company',
-            'owner_name',
-            'owner_surname',
+            'user_name',
+            'user_surname',
             'mail',
-            'credit',
+            'credits',
             'credits_price',
             'credits_price_date',
             'credits_expiration_date',
-            'country',
-            'city',
-            'district',
             'created_date',
             'update_date',
-            'status'
+            'status_id'
+        ]
+
+@test_users.doc_type
+class TestUsersDocument(DocType):
+
+    class Meta:
+        model = TestUsers
+
+        fields = [
+            'company_id',
+            'company',
+            'phone_number',
+            'password',
+            'category_id',
+            'user_name',
+            'user_surname',
+            'mail',
+            'created_date',
+            'update_date',
+            'status_id'
+
+
         ]
 
 @test_personnel.doc_type

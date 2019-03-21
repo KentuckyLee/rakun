@@ -6,7 +6,20 @@
 </head>
 <body>
 
-{{ data }}
+{% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " style=opacity:0.9 {% endif  %}>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+{% for k,v in data_login.items %}
+ {{k}}{{v}}
+
+{%endfor%}
+{{ data_login }}
+
+{{data_register}}
 
 
 </body>

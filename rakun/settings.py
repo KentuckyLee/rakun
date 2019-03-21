@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'personnel',
     'rakun_elastic',
     'notifications',
-    'dashboard'
+    'dashboard',
+    'users',
+
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,10 @@ ELASTICSEARCH_DSL={
         'hosts': 'localhost:9200'
     },
 }
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'rakunsolutionandvalue@gmail.com'
+EMAIL_HOST_PASSWORD = '47712116'
+EMAIL_USE_SSL = False
+EMAIL_USE_TLS = True

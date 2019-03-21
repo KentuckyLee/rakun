@@ -71,17 +71,19 @@
                             <h5 class="mb-0">Sisteme Giriş</h5>
                             <span class="d-block text-muted">Telefon numaranız ile sisteme giriş yapabilirsiniz.</span>
                         </div>
-                        <form class="login-form wmin-sm-400" action="{% url 'companies:login' %}" method="POST">
+                        <form class="login-form wmin-sm-400" method="POST" action="{% url 'companies:login' %}">
                             {% csrf_token %}
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="tel" class="form-control" placeholder="Cep Telefonunuz (545 xxx xxxx)", name="login_phone", id="login_phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>
+                                {{ form_login.phone_number}}
+                                <!--<input type="tel" class="form-control" placeholder="Cep Telefonunuz (545 xxx xxxx)", name="login_phone", id="login_phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>-->
                                 <div class="form-control-feedback">
                                     <i class="icon-phone text-muted"></i>
                                 </div>
                             </div>
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="password" class="form-control" placeholder="Şifreniz" name="login_password" id="login_password" required>
+                                {{ form_login.password}}
+                                <!--<input type="password" class="form-control" placeholder="Şifreniz" name="login_password" id="login_password" required>-->
                                 <div class="form-control-feedback">
                                     <i class="icon-lock2 text-muted"></i>
                                 </div>
@@ -137,42 +139,49 @@
                         </div>
                         <form class="login-form wmin-sm-400"  method="POST" action="{% url 'companies:register'%}">
                             {% csrf_token %}
+
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="tel" class="form-control" placeholder="Cep Telefonunuz (545 xxx xxxx)", name="phone_number", id="register_phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>
+                                {{ form_register.phone_number }}
+                                <!--<input type="tel" class="form-control" placeholder="Cep Telefonunuz (545 xxx xxxx)", name="phone_number", id="register_phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>-->
                                 <div class="form-control-feedback">
                                     <i class="icon-phone text-muted"></i>
                                 </div>
                             </div>
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="tel" class="form-control" placeholder="Cep Telefonunuz Tekrar (545 xxx xxxx)", name="phone_replace", id="register_phone_replace" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>
+                                {{ form_register.phone_replace}}
+                                <!--<input type="tel" class="form-control" placeholder="Cep Telefonunuz Tekrar (545 xxx xxxx)", name="phone_replace", id="register_phone_replace" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required/>-->
                                 <div class="form-control-feedback">
                                     <i class="icon-phone text-muted"></i>
                                 </div>
                             </div>
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="text" class="form-control" placeholder="Anaokulu Adı" required name="company", id="register_company">
+                                {{ form_register.company}}
+                                <!--<input type="text" class="form-control" placeholder="Anaokulu Adı" required name="company", id="register_company">-->
                                 <div class="form-control-feedback">
                                     <i class="icon-home text-muted"></i>
                                 </div>
                             </div>
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="text" class="form-control" placeholder="İsminiz" required name="owner_name", id="owner_name">
+                                {{ form_register.user_name}}
+                                <!--<input type="text" class="form-control" placeholder="İsminiz" required name="owner_name", id="owner_name">-->
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
                             </div>
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="text" class="form-control" placeholder="Soyisminiz" required name="owner_surname", id="owner_surname">
+                                {{ form_register.user_surname}}
+                                <!--<input type="text" class="form-control" placeholder="Soyisminiz" required name="owner_surname", id="owner_surname">-->
                                 <div class="form-control-feedback">
                                     <i class="icon-user text-muted"></i>
                                 </div>
                             </div>
 
                             <div class="form-group form-group-feedback form-group-feedback-left">
-                                <input type="email" class="form-control" placeholder="Mail Adresi", name="mail", id="register_mail" pattern=".+@[a-z0-9.-]+.com" size="30" required>
+                                {{ form_register.mail}}
+                                <!--<input type="email" class="form-control" placeholder="Mail Adresi", name="mail", id="register_mail" pattern=".+@[a-z0-9.-]+.com" size="30" required>-->
                                 <div class="form-control-feedback">
                                     <i class="icon-mention text-muted"></i>
                                 </div>
