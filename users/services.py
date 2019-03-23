@@ -1,5 +1,5 @@
 from rakun_elastic.document import TestUsersDocument
-from elasticsearch_dsl.query import Q
+from elasticsearch_dsl.query import Q,MultiMatch
 from elasticsearch import Elasticsearch
 from django.contrib.auth.base_user import BaseUserManager
 from datetime import datetime
@@ -11,36 +11,44 @@ class UsersService():
 
     def save_user(self, d):
         try:
-            d['password'] = BaseUserManager().make_random_password(6)
+            password = BaseUserManager().make_random_password(6)
+            d['password'] = hashlib.md5(password.encode('utf8')).hexdigest()
             d['created_date'] = datetime.now()
             d['update_date'] = datetime.now()
             d['status_id'] = 2
             new_user = TestUsersDocument(**d)
             new_user.save()
             send_mail = Sys_Mails()
-            send_mail.owner_first_record(d['mail'], d['phone_number'], d['password'])
+            send_mail.owner_first_record(d['mail'], d['phone_number'], password)
             return new_user
         except Exception as e:
             print(e)
 
-    def get_user_status(self,d):
+    def get_user(self,d):
         try:
-            query = TestUsersDocument().\
+            print('phone_number: {}, password {}'.format(d['phone_number'], hashlib.md5(d['password'].encode('utf8')).hexdigest()))
+            query = TestUsersDocument. \
                 search().\
                 query(
-                    Q('match_phrase', phone_number=d['phone_number']) &
-                    Q('match_phrase', password=d['password']) |
-                    Q('match_phrase', password=hashlib.md5(d['password'].encode('utf8')).hexdigest())
-            )
+                     Q('match_phrase', phone_number=d['phone_number']) &
+                     Q('match_phrase', password=hashlib.md5(d['password'].encode('utf8')).hexdigest())
+                )
+            # query = TestUsersDocument.\
+            #     search().\
+            #     query(
+            #         Q('match_phrase', phone_number=d['phone_number']) &
+            #         Q('match_phrase', password=d['password']) |
+            #         Q('match_phrase', password=hashlib.md5(d['password'].encode('utf8')).hexdigest())
+            #         )
             response = query.execute()
-            result = []
-            for i in response:
-                result.append(i.status_id)
-                result.append(i.phone_number)
-                result.append(i.company_id)
+            print('.................response: ', response)
+            for result in response:
+                result
             return result
         except Exception as e:
             print(e)
+
+
     def user_password_update(self, d):
         try:
             password = hashlib.md5(d['password'].encode('utf8')).hexdigest()
@@ -48,6 +56,10 @@ class UsersService():
             phone_number = d['phone_number']
             update_date = datetime.now()
             client = Elasticsearch()
+
+            print('................', company_id)
+            print('................', phone_number)
+            print('................', password)
             response = client.update_by_query(
                 index="test_users",
                 body={

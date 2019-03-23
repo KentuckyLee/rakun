@@ -41,13 +41,11 @@
 <body>
 
 	<!-- Main navbar -->
-	id: {{id}}
 	user name: {{user_name}}
 	user surname: {{user_surname}}
 	company: {{company}}
-	company_id: {{company_id}}
 	phone_number: {{phone_number}}
-	a: {{get}}
+	mail: {{mail}}
 
 	<div class="navbar navbar-expand-md navbar-dark bg-indigo navbar-static">
 		<div class="navbar-brand">
@@ -223,9 +221,9 @@
 				</li>
 
 				<li class="nav-item">
-					<a href="#" class="navbar-nav-link">
+					<a href="{% url 'companies:logout' %}" class="navbar-nav-link">
 						<i class="icon-switch2"></i>
-						<span class="d-md-none ml-2">Logout</span>
+						<span class="d-md-none ml-2">EMRE</span>
 					</a>
 				</li>
 			</ul>
