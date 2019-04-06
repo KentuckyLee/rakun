@@ -4,6 +4,7 @@ class Authantication:
 
     @staticmethod
     def getInstance():
+        print('...............Context/ContextView/Authantication get_instance function called')
         if Authantication.__instance == None:
             Authantication()
         return Authantication.__instance

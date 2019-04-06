@@ -66,6 +66,8 @@ class RegisterForm(forms.Form):
 
 class LoginForm(forms.Form):
 
+    authorization_choices = [('1', 'Veli Girişi'), ('2', 'Personel Girişi')]
+
     phone_number = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -80,14 +82,23 @@ class LoginForm(forms.Form):
             'placeholder': 'Şifreniz',
             'id': 'password',
         }))
+    authorization_type = forms.CharField(
+        required=True,
+        widget=forms.Select(
+            choices=authorization_choices,
+            attrs={
+                'class': 'form-control',
+            }))
 
     def clean(self):
         phone_number = self.cleaned_data.get('phone_number')
         password = self.cleaned_data.get('password')
+        authorization_type = self.cleaned_data.get('authorization_type')
 
         values = {
             'phone_number': phone_number,
-            'password': password
+            'password': password,
+            'authorization_type': authorization_type
         }
 
         return values
@@ -117,26 +128,17 @@ class NewPasswordForm(forms.Form):
             'id': 'password_replace',
         }))
 
-    # company_id = forms.CharField(widget=forms.HiddenInput(
-    #     attrs={
-    #         'id': 'company_id',
-    #         'value': '{{company_id}}'
-    #     }
-    # ))
-
     def clean(self):
         phone_number = self.cleaned_data.get('phone_number')
         password = self.cleaned_data.get('password')
         password_replace = self.cleaned_data.get('password_replace')
-        # company_id = self.cleaned_data.get('company_id')
         if password != password_replace:
             raise forms.ValidationError('Girilen şifreler eşleşmiyor')
 
         values = {
             'phone_number': phone_number,
             'password': password,
-            'password_replace': password_replace,
-            # 'company_id': company_id
+            'password_replace': password_replace
         }
 
         return values

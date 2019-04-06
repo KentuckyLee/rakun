@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 
-class TestUsers(models.Model):
+class Users(models.Model):
 
     company_id = models.CharField(max_length=50)  # Anaokulu id' si
     company = models.CharField(max_length=50)  # Anaokulu ismi

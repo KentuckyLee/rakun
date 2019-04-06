@@ -1,41 +1,108 @@
 from django_elasticsearch_dsl import DocType, Index
-from companies.models import TestCompanies
-from personnel.models import TestPersonnel
-from notifications.models import TestNotifications
-from users.models import TestUsers
+from companies.models import Companies
+from personnel.models import Personnels
+from classes.models import Classes
+from users.models import Users
+from parents.models import Parents
+from students.models import Students
+from notifications.models import Notifications
 
-
-test_companies = Index('test_companies')
-test_companies.settings(
+parents = Index('parents')
+parents.settings(
     number_of_shards=1,
     number_of_replicas=0
 )
 
-test_users = Index('test_users')
-test_companies.settings(
+student = Index('students')
+student.settings(
     number_of_shards=1,
     number_of_replicas=0
 )
 
-test_personnel = Index('test_personnel')
-test_personnel.settings(
+classes = Index('classes')
+classes.settings(
     number_of_shards=1,
     number_of_replicas=0
 )
 
-test_notifications = Index('test_notifications')
-test_notifications.settings(
+companies = Index('companies')
+companies.settings(
+    number_of_shards=1,
+    number_of_replicas=0
+)
+
+users = Index('users')
+users.settings(
+    number_of_shards=1,
+    number_of_replicas=0
+)
+
+personnels = Index('personnels')
+personnels.settings(
+    number_of_shards=1,
+    number_of_replicas=0
+)
+
+notifications = Index('notifications')
+notifications.settings(
     number_of_shards=1,
     number_of_replicas=0
 )
 
 
-
-@test_companies.doc_type
-class TestCompaniesDocument(DocType):
+@student.doc_type
+class StudentDocument(DocType):
 
     class Meta:
-        model = TestCompanies
+        model = Students
+
+        fields = [
+            'student_name',
+            'student_surname',
+            'parent_id',
+            'parent',
+            'class_name',
+            'class_id',
+            'image_url',
+            'student_birth_date',
+            'company_id',
+            'company',
+            'private_student',
+            'student_height',
+            'student_weight',
+            'student_note',
+            'status_id',
+            'created_date',
+            'update_date',
+        ]
+
+
+@parents.doc_type
+class ParentDocument(DocType):
+
+    class Meta:
+        model = Parents
+
+        fields = [
+            'user_name',
+            'user_surname',
+            'phone_number',
+            'mail',
+            'birth_date',
+            'company_id',
+            'company',
+            'category_id',
+            'students_count',
+            'status_id',
+            'created_date',
+            'update_date',
+        ]
+
+@companies.doc_type
+class CompaniesDocument(DocType):
+
+    class Meta:
+        model = Companies
 
         fields = [
             'phone_number',
@@ -49,14 +116,14 @@ class TestCompaniesDocument(DocType):
             'credits_expiration_date',
             'created_date',
             'update_date',
-            'status_id'
+            'status_id',
         ]
 
-@test_users.doc_type
-class TestUsersDocument(DocType):
+@users.doc_type
+class UsersDocument(DocType):
 
     class Meta:
-        model = TestUsers
+        model = Users
 
         fields = [
             'company_id',
@@ -74,11 +141,28 @@ class TestUsersDocument(DocType):
 
         ]
 
-@test_personnel.doc_type
-class TestPersonnelDocument(DocType):
+
+@classes.doc_type
+class ClassesDocument(DocType):
 
     class Meta:
-        model = TestPersonnel
+        model = Classes
+
+        fields = [
+            'company_id',
+            'class_name',
+            'quota',
+            'registered_student',
+            'status_id',
+            'created_date',
+            'update_date',
+        ]
+
+@personnels.doc_type
+class PersonnelsDocument(DocType):
+
+    class Meta:
+        model = Personnels
 
         fields = [
 
@@ -91,68 +175,30 @@ class TestPersonnelDocument(DocType):
             'birth_date',
             'address',
             'university',
-            'domain',
-            'language',
-            'graduated_date',
 
             # Personnel authenticate data
 
             'phone_number',
-            'password',
             'company_id',
             'company',
             'class_room',
-            'position',
-            'category',
-            'status',
+            'personnel_type',
+            'category_id',
+            'status_id',
             'created_date',
             'update_date'
         ]
 
-    # def get_personnel_data(self, ids):
-    #
-    #     query_object = TestPersonnelDocument.search().filter('ids', values=self.ids)  # id ye sahip personel dokumanı sorgulanıyor
-    #     query = query_object.execute()  # personel dataları oluşturuluyor
-    #     for per_data in query:
-    #         per_data
-    #     personnel_data = {
-    #         'id': self.ids,
-    #         'page': 'Personel',
-    #         'user_name': per_data.user_name,
-    #         'user_surname': per_data.user_surname,
-    #         'mail': per_data.mail,
-    #         'image_url': per_data.image_url,
-    #         'birth_date': per_data.birth_date,
-    #         'address': per_data.address,
-    #         'university': per_data.university,
-    #         'domain': per_data.domain,
-    #         'language': per_data.language,
-    #         'graduated_date':per_data.graduated_date,
-    #
-    #         # Personnel authenticate data
-    #         'phone_number': per_data.phone_number,
-    #         'password': per_data.phone_number,
-    #         'company_id': per_data.company_id,
-    #         'company': per_data.company,
-    #         'class_room': per_data.class_room,
-    #         'position': per_data.position,
-    #         'category': per_data.category,
-    #         'status': per_data.status,
-    #         'created_date': per_data.created_date,
-    #         'update_date': per_data.update_date
-    #     }
-    #     return personnel_data
 
-
-@test_notifications.doc_type
-class TestNotificationsDocument(DocType):
+@notifications.doc_type
+class NotificationsDocument(DocType):
     class Meta:
-        model = TestNotifications
+        model = Notifications
 
         fields = [
-            'created_user',
-            'assigned_user',
-            'company',
+            'created_user_id',
+            'assigned_user_id',
+            'company_id',
             'content',
             'is_read',
             'created_date'

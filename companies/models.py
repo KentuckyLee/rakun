@@ -5,7 +5,7 @@ from django.db import models
 #  Register Model
 
 
-class TestCompanies(models.Model):
+class Companies(models.Model):
 
     phone_number = models.CharField(max_length=10)  # Telefon numarası
     # company_id = models.CharField(max_length=10)  # owner kullanıcının telefon numarası
