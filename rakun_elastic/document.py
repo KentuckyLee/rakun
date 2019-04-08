@@ -93,6 +93,7 @@ class ParentDocument(DocType):
             'company',
             'category_id',
             'students_count',
+            'address',
             'status_id',
             'created_date',
             'update_date',

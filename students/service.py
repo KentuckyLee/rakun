@@ -15,8 +15,9 @@ class StudentService(object):
                 d['student_weight'] = 0
                 d['created_date'] = datetime.now()
                 d['update_date'] = datetime.now()
-                new_student = StudentDocument(**d).save()
-                if new_student:
+                new_student = StudentDocument(**d)
+                save = new_student.save()
+                if save:
                     return new_student
                 else:
                     raise Exception('error while student registering')
@@ -45,27 +46,39 @@ class StudentService(object):
         except Exception as e:
             print(e)
 
-    def get_student(self, d):
+    def find_by_id(self, d):
         try:
-            print('.................parents/services/get_parent function called')
+            print('...............students/service/find_by_id function called.')
             if d.values() is not None:
-                if d.get('id') is not None:
-                    request = StudentDocument.\
-                        search().\
-                        query(
-                            Q('match_phrase', _id=d['id']) &
-                            Q('match_phrase', company_id=d['company_id']) &
-                            Q('match_phrase', status_id=1)
-                        )
+                query = StudentDocument.\
+                    search().\
+                    query(
+                        Q('match_phrase', status_id=1) &
+                        Q('match_phrase', company_id=d['company_id'])
+                    )
+                result = query.execute()
+                if result.hits.total != 0:
+                    return result
                 else:
-                    request = StudentDocument. \
-                        search(). \
-                        query(
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
+    def find_by_parent_id_and_company_id(self, d):
+        try:
+            print('.................Student/services/find_by_parent_id_and_company_id function called')
+            if d.values() is not None:
+                request = StudentDocument. \
+                    search(). \
+                    query(
                         Q('match_phrase', parent_id=d['parent_id']) &
                         Q('match_phrase', company_id=d['company_id']) &
                         Q('match_phrase', status_id=1)
                     )
                 result = request.execute()
+                print(result)
                 if result.hits.total != 0:
                     return result
                 else:

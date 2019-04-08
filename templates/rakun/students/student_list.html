@@ -1,0 +1,79 @@
+{% extends "rakun/layout.html" %}
+	{% load static %}
+    {% block body%}
+    <!-- Theme JS files -->
+	<script src="{% static 'rakun/global_assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/demo_pages/datatables_basic.js' %}"></script>
+	<!-- /theme JS files -->
+        <!-- Basic datatable -->
+				<div class="card">
+					<div class="card-header header-elements-inline">
+						<h5 class="card-title">Öğrenciler Listesi</h5>
+						<div class="header-elements">
+							<div class="list-icons">
+		                		<a class="list-icons-item" data-action="collapse"></a>
+		                		<a class="list-icons-item" data-action="reload"></a>
+		                		<a class="list-icons-item" data-action="remove"></a>
+		                	</div>
+	                	</div>
+					</div>
+
+					<div class="card-body">
+						Sisteme kayıtlı tüm personellerin listesi burada görüntülenir. Personel üzerinde özel işlem
+                        yapmak için <strong>İşlem</strong> ikonunu kullanabilirsiniz.<br><br>
+
+                        <div class="col-md-3 col-sm-4">
+                            <div class="d-flex align-items-center">
+                                <a href="{% url 'parents:set_new_parent' %}" class="dropdown-item">
+                                    <i class="icon-plus22 mr-3 icon-1x"></i>
+                                    Öğrenci Ekle
+                                 </a>
+                            </div>
+                        </div>
+
+					</div>
+
+					<table class="table datatable-basic">
+						<thead>
+							<tr>
+								<th>İsim</th>
+								<th>Doğum Tarihi</th>
+								<th>Sınıfı</th>
+								<th>Veli ismi</th>
+								{% if category_id == 1 or category_id == 4%}
+								<th class="text-center">İşlem</th>
+								{%endif%}
+							</tr>
+						</thead>
+						<tbody>
+						{% for student in page_data %}
+							<tr>
+								<td>{{student.student_name}} {{student.student_surname}}</td>
+								<td>{{student.student_birth_date}}</a></td>
+								<td>{{student.class_name}}</td>
+								<td><a href="#"></a>{{student.parent}}</td>
+								{% if category_id == 1 or category_id == 4%}
+								<td class="text-center">
+									<div class="list-icons">
+										<div class="dropdown">
+											<a href="#" class="list-icons-item" data-toggle="dropdown">
+												<i class="icon-menu9"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right">
+												<a href="#" class="dropdown-item"><i class="icon-profile"></i> Profile Git</a>
+												<a href="#" class="dropdown-item"><i class="icon-pencil3"></i> Bilgileri güncelle</a>
+												<a href="#" class="dropdown-item"><i class="icon-eraser2"></i> Öğrenciyi sil</a>
+											</div>
+										</div>
+									</div>
+								</td>
+								{%endif%}
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<!-- /basic datatable -->
+
+    {% endblock body%}

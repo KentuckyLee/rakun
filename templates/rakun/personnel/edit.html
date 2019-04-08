@@ -1,0 +1,9 @@
+<div class="container">
+    <form method="post"  class="form-group custom-control" action="{% url 'personnel:set_new_personnel' %}" data-fouc>
+    {% csrf_token %}
+    {{ edit_form.as_p}}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+        </div>
+    </form>
+</div>

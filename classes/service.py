@@ -28,6 +28,7 @@ class ClassService(object):
     def get_all_class(self, d):
         try:
             print('.................classes/services/get_all_class function called')
+            print('d', d)
             if d.values() is not None:
                 request = ClassesDocument.\
                     search().\
@@ -36,6 +37,7 @@ class ClassService(object):
                         Q('match_phrase', company_id=d['company_id'])
                     )
                 results = request.execute()
+                print('result: ', results)
                 if results.hits.total != 0:
                     return results
                 else:
@@ -45,15 +47,11 @@ class ClassService(object):
         except Exception as e:
             print(e)
 
-    def get_class(self, d):
+    def find_by_id(self, d):
         try:
+            print('.................classes/services/find_by_id function called')
             if d.values() is not None:
-                request = ClassesDocument. \
-                    search(). \
-                    query(
-                        Q('match_phrase', _id=d['_id']) &
-                        Q('match_phrase', status_id=1)
-                    )
+                request = ClassesDocument.search().query(Q('match_phrase', _id=d['id']))
                 result = request.execute()
                 if result.hits.total != 0:
                     return result
@@ -64,36 +62,18 @@ class ClassService(object):
         except Exception as e:
             print(e)
 
-    def registered_student_update(self, d):
+    def update(self, d):
         try:
-            print('...............companies/service/user_password_update function called.')
+            print('.................classes/services/update function called')
             if d.values() is not None:
-                id = d['_id']
-                registered_student = d['registered_student']
+                class_id = d['id']
                 update_date = datetime.now()
+                d['update_date'] = update_date
+                doc = {'doc': d}
                 client = Elasticsearch()
-                response = client.update_by_query(
-                    index="classes",
-                    body={
-                        "query": {
-                            "match": {
-                                "_id": id,
-                            }
-                        },
-                        "script": {
-                            "inline": "ctx._source[params.field0] = params.value0;"
-                                      "ctx._source[params.field1] = params.value1;",
-                            "params": {
-                                "field0": "registered_student",
-                                "value0": registered_student,
-                                "field1": "update_date",
-                                "value1": update_date,
-                            },
-                        }
-                    },
-                )
-                if response['updated'] != 0:
-                    return response['updated']
+                response = client.update(index='classes', id=class_id, body=doc, doc_type='doc')
+                if response['_shards']['successful'] != 0:
+                    return True
                 else:
                     return False
             else:

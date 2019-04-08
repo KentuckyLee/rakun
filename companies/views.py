@@ -34,11 +34,12 @@ def register(request):
         # form valid is
         if form_register.is_valid():
             data_register = form_register.cleaned_data
-            company = CompaniesService().get_all_company(data_register)
+            company = CompaniesService().find_by_mail_and_phone_number(data_register)
             # Kayıtlı anaokulu olması durumu
             if company is None:
                 new_company = CompaniesService().save_company(data_register)
                 data_register['company_id'] = new_company.meta.id
+                data_register['id'] = new_company.meta.id
                 data_register['category_id'] = 1
                 new_user = UsersService().save_user(data_register)
                 if new_user:

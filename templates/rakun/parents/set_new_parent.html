@@ -1,7 +1,6 @@
 {% extends "rakun/layout.html" %}
 {% load static %}
     {% block body%}
-
     <!-- Theme JS files -->
 	<script src="{% static 'rakun/global_assets/js/plugins/forms/wizards/steps.min.js' %}"></script>
 	<script src="{% static 'rakun/global_assets/js/plugins/forms/selects/select2.min.js' %}"></script>
@@ -27,7 +26,7 @@
 
 	            <div class="card">
 					<div class="card-header bg-white header-elements-inline">
-						<h6 class="card-title">Yeni personel kaydı</h6>
+						<h6 class="card-title">Yeni veli kaydı</h6>
 						<div class="header-elements">
 							<div class="list-icons">
 		                		<a class="list-icons-item" data-action="collapse"></a>
@@ -38,9 +37,11 @@
 					</div>
 
 					<div class="container">
-						<form method="post"  class="form-group custom-control" action="{% url 'personnel:set_new_personnel' %}" data-fouc>
+						<form method="post"  class="form-group custom-control" action="{% url 'parents:set_new_parent' %}" data-fouc>
 						{% csrf_token %}
-						{{ form.as_p}}
+							{{ parent_form.as_p}}
+                            <hr>
+                            {{ student_form.as_p}}
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
 							</div>

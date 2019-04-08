@@ -11,7 +11,7 @@
 	<!-- Basic datatable -->
 	<div class="card">
 		<div class="card-header header-elements-inline">
-			<h5 class="card-title">Personel Listesi</h5>
+			<h5 class="card-title">Veli Listesi</h5>
 			<div class="header-elements">
 				<div class="list-icons">
 					<a class="list-icons-item" data-action="collapse"></a>
@@ -22,13 +22,13 @@
 		</div>
 
 		<div class="card-body">
-			Sisteme kayıtlı tüm personellerin listesi burada görüntülenir. Personel üzerinde özel işlem
+			Sisteme kayıtlı tüm Velilerin listesi burada görüntülenir. Veli üzerinde özel işlem
 			yapmak için <strong>İşlem</strong> ikonunu kullanabilirsiniz.<br><br>
 			<div class="col-md-3 col-sm-4">
 				<div class="d-flex align-items-center">
-					<a href="{% url 'personnel:set_new_personnel' %}" class="dropdown-item">
+					<a href="{% url 'parents:set_new_parent' %}" class="dropdown-item">
 						<i class="icon-user-plus mr-3 icon-1x"></i>
-						Personel Ekle
+						Veli Ekle
 					 </a>
 				</div>
 			</div>
@@ -47,18 +47,16 @@
 					<th>Telefon Numarası</th>
 					<th>Adresi</th>
 					<th>Doğum Tarihi</th>
-					<th>Görevi</th>
 					<th class="text-center">İşlem</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for pers in page_data %}
+				{% for parent in page_data %}
 				<tr>
-					<td>{{pers.user_name}} {{pers.user_surname}}</td>
-					<td>{{pers.phone_number}}</td>
-					<td>{{pers.address}}</td>
-					<td>{{pers.birth_date}}</td>
-					<td><span class="badge badge-success">{{pers.personnel_type}}</span></td>
+					<td><a href="{% url 'parents:get_profile' parent.meta.id %}">{{parent.user_name}} {{parent.user_surname}}</a></td>
+					<td>{{parent.phone_number}}</td>
+					<td>{{parent.address}}</td>
+					<td>{{parent.birth_date}}</td>
 					{% if category_id == 1 or category_id == 4%}
 					<td class="text-center">
 						<div class="list-icons">
@@ -67,9 +65,9 @@
 									<i class="icon-menu9"></i>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right">
-									<a href="{% url 'personnel:get_profile' pers.meta.id %}" class="dropdown-item"><i class="icon-profile"></i> Profile Git</a>
-									<a href="{% url 'personnel:get_profile' pers.meta.id %}#p-setting" class="dropdown-item"><i class="icon-pencil3"></i> Bilgileri güncelle</a>
-									<a href="{% url 'personnel:personnel_delete' pers.meta.id %}" class="dropdown-item"><i class="icon-eraser2"></i> Personeli sil</a>
+									<a href="{% url 'parents:get_profile' parent.meta.id %}" class="dropdown-item"><i class="icon-profile"></i> Profile Git</a>
+									<a href="{% url 'parents:get_profile' parent.meta.id %}#p-setting" class="dropdown-item"><i class="icon-pencil3"></i> Bilgileri güncelle</a>
+									<a href="#" class="dropdown-item"><i class="icon-eraser2"></i> Personeli sil</a>
 								</div>
 							</div>
 						</div>

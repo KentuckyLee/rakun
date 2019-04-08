@@ -10,7 +10,7 @@ import hashlib
 class UsersService(object):
 
     def save_user(self, d):
-        print('...............companies/service/save_user function called.')
+        print('...............UsersService/service/save_user function called.')
         try:
             if d.values() is not None:
                 password = BaseUserManager().make_random_password(6)
@@ -19,7 +19,7 @@ class UsersService(object):
                 d['update_date'] = datetime.now()
                 d['status_id'] = 2
                 new_user = UsersDocument(**d)
-                save = new_user.save()
+                save = new_user.save(id=d['id'])
                 if save:
                     send_mail = Sys_Mails()
                     mail = send_mail.owner_first_record(d['mail'], d['phone_number'], password)
@@ -97,6 +97,20 @@ class UsersService(object):
         except Exception as e:
             print(e)
 
+    def find_by_id(self, d):
+        try:
+            print('...............companies/service/get_user_find_by_id function called.')
+            if d.values() is not None:
+                request = UsersDocument.search().query(Q('match_phrase', _id=d['id']))
+                result = request.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
 
     def user_password_update(self, d):
         try:
@@ -139,5 +153,21 @@ class UsersService(object):
                     return False
             else:
                 raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
+    def update(self, d):
+        try:
+            print('...............companies/service/update_user function called.')
+            if d.values() is not None:
+                update_date = datetime.now()
+                d['update_date'] = update_date
+                doc = {'doc': d}
+                client = Elasticsearch()
+                response = client.update(index='users', id=d['id'], doc_type='doc', body=doc)
+                if response['_shards']['successful'] != 0:
+                    return True
+                else:
+                    return False
         except Exception as e:
             print(e)

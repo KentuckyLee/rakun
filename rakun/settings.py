@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,6 +31,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,14 +43,16 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
     'okulyazilimlari',
     'companies',
-    'personnel',
     'rakun_elastic',
-    'notifications',
     'dashboard',
+    'classes',
+    'personnel',
     'users',
-    'example',
-
+    'notifications',
+    'parents',
+    'students',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

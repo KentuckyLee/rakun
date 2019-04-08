@@ -10,6 +10,7 @@ class Parents(models.Model):
     phone_number = models.CharField(max_length=10)  # Telefon numarası
     mail = models.CharField(max_length=150, null=True)  # Kullanıcı adresi
     birth_date = models.DateTimeField(auto_now_add=False, null=False)  # Kullanıcının doğu tarihi
+    address = models.TextField(null=True)  # Adres bilgisi
     company_id = models.CharField(max_length=40)  # owner kulanıcının telefon numarası
     company = models.CharField(max_length=50)  # Anaokulu ismi
     category_id = models.CharField(null=False, max_length=50)  # Kullanıcı kategorisi

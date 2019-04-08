@@ -28,17 +28,50 @@ class CompaniesService(object):
         except Exception as e:
             print(e)
 
-
-    def get_all_company(self, d):
+    def find_by_id(self, d):
         try:
-            print('..............companies/services/ get_all_company function called')
+            print('..............companies/services/find_by_id function called')
+            if d.values() is not None:
+                query = CompaniesDocument.search().query(Q('match_phrase', _id=d['id']))
+                result = query.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
+
+    def find_by_mail_and_phone_number(self, d):
+        try:
+            print('..............companies/services/find_by_mail_and_phone_number function called')
             if d.values() is not None:
                 query = CompaniesDocument. \
                     search(). \
                     query(
-                        Q('match_phrase', mail=d['mail']) |
-                        Q('match_phrase', phone_number=d['phone_number']) &
-                        Q('match_phrase', status=1))
+                    Q('match_phrase', mail=d['mail']) |
+                    Q('match_phrase', phone_number=d['phone_number']) &
+                    Q('match_phrase', status=1))
+                results = query.execute()
+                if results.hits.total != 0:
+                    return results
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
+
+    def get_all_company(self, d):
+        try:
+            print('..............companies/services/get_all_company function called')
+            if d.values() is not None:
+                query = CompaniesDocument. \
+                    search(). \
+                    query(Q('match_phrase', status=1))
                 results = query.execute()
                 if results.hits.total != 0:
                     return results

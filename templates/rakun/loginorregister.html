@@ -47,9 +47,6 @@
                         {{ message }}
                     </div>
                     {% endfor %}
-        <br>{% if password or sonuc %}
-            PASSWORD: {{password}}
-            {% endif %}
 
 
         <!-- Content area -->
@@ -88,6 +85,11 @@
                                     <i class="icon-lock2 text-muted"></i>
                                 </div>
                             </div>
+                            <div class="form-group form-group-feedback form-group-feedback-left">
+                                <label class="">Lütfen Giriş tipini belirleyiniz</label>
+                                {{ form_login.authorization_type}}
+                                <!--<input type="password" class="form-control" placeholder="Şifreniz" name="login_password" id="login_password" required>-->
+                            </div>
 
                             <div class="form-group d-flex align-items-center">
                                 <div class="form-check mb-0">
@@ -105,27 +107,6 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
                             </div>
-                            <!--
-                            <div class="form-group text-center text-muted content-divider">
-                                <span class="px-2">or sign in with</span>
-                            </div>
-
-                            <div class="form-group text-center">
-                                <button type="button" class="btn btn-outline bg-indigo border-indigo text-indigo btn-icon rounded-round border-2"><i class="icon-facebook"></i></button>
-                                <button type="button" class="btn btn-outline bg-pink-300 border-pink-300 text-pink-300 btn-icon rounded-round border-2 ml-2"><i class="icon-dribbble3"></i></button>
-                                <button type="button" class="btn btn-outline bg-slate-600 border-slate-600 text-slate-600 btn-icon rounded-round border-2 ml-2"><i class="icon-github"></i></button>
-                                <button type="button" class="btn btn-outline bg-info border-info text-info btn-icon rounded-round border-2 ml-2"><i class="icon-twitter"></i></button>
-                            </div>
-
-                            <div class="form-group text-center text-muted content-divider">
-                                <span class="px-2">Don't have an account?</span>
-                            </div>
-
-                            <div class="form-group">
-                                <a href="#" class="btn btn-light btn-block">Sign up</a>
-                            </div>
-                            -->
-
                             <span class="form-text text-center text-muted">Devam ederek, <a href="#">Şartlar &#38; Koşullarımızı</a> ve  <a href="#">Çerez Politikamızı</a> okuduğunuzu onaylıyorsunuz.</span>
                         </form>
                     </div>
