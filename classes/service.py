@@ -28,7 +28,6 @@ class ClassService(object):
     def get_all_class(self, d):
         try:
             print('.................classes/services/get_all_class function called')
-            print('d', d)
             if d.values() is not None:
                 request = ClassesDocument.\
                     search().\
@@ -37,7 +36,6 @@ class ClassService(object):
                         Q('match_phrase', company_id=d['company_id'])
                     )
                 results = request.execute()
-                print('result: ', results)
                 if results.hits.total != 0:
                     return results
                 else:

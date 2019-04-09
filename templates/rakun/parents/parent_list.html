@@ -53,7 +53,7 @@
 			<tbody>
 				{% for parent in page_data %}
 				<tr>
-					<td><a href="{% url 'parents:get_profile' parent.meta.id %}">{{parent.user_name}} {{parent.user_surname}}</a></td>
+					<td><a href="{% url 'parents:get_profile' parent.meta.id %}"> {{parent.user_name}} {{parent.user_surname}} </a></td>
 					<td>{{parent.phone_number}}</td>
 					<td>{{parent.address}}</td>
 					<td>{{parent.birth_date}}</td>

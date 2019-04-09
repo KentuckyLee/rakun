@@ -58,7 +58,15 @@
 					<td>{{pers.phone_number}}</td>
 					<td>{{pers.address}}</td>
 					<td>{{pers.birth_date}}</td>
-					<td><span class="badge badge-success">{{pers.personnel_type}}</span></td>
+					<td>
+						{% if pers.personnel_type == 1 %}
+						<span class="badge badge-success"> Öğretmen </span>
+						{% elif pers.personnel_type == 2 %}
+						<span class="badge badge-info"> İdari Personel </span>
+						{% elif pers.personnel_type == 3 %}
+						<span class="badge badge-secondary"> Teknik Personel </span>
+						{% endif %}
+					</td>
 					{% if category_id == 1 or category_id == 4%}
 					<td class="text-center">
 						<div class="list-icons">

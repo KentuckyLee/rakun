@@ -52,7 +52,7 @@
 								<td>{{student.student_name}} {{student.student_surname}}</td>
 								<td>{{student.student_birth_date}}</a></td>
 								<td>{{student.class_name}}</td>
-								<td><a href="#"></a>{{student.parent}}</td>
+								<td><a href="{% url 'parents:get_profile' student.parent_id %}"><span class="badge badge-info">{{student.parent}}</span></a></td>
 								{% if category_id == 1 or category_id == 4%}
 								<td class="text-center">
 									<div class="list-icons">
