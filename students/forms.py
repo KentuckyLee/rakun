@@ -92,3 +92,78 @@ class NewStudentForm(forms.Form):
         }
 
         return values
+
+class StudentInspectionForm(forms.Form):
+    in_here = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'custom-control-input',
+                'id': 'custom_checkbox_stacked_checked_1',
+            }))
+    student_id = forms.CharField(
+        required=True,
+        max_length=50,
+        widget=forms.HiddenInput(
+            attrs={
+                'class': 'form-control required',
+                'readonly': 'readonly'
+            }))
+    class_room = forms.CharField(
+        required=True,
+        max_length=50,
+        widget=forms.HiddenInput(
+            attrs={
+                'class': 'form-control required',
+                'readonly': 'readonly'
+            }))
+    student_name = forms.CharField(
+        max_length=20,
+        required=True,
+        label='Öğrenci ismi ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control required',
+                'id': 'user_name',
+                'placeholder': 'Öğrenci ismini girin',
+                'readonly': 'readonly'
+            }))
+    student_surname = forms.CharField(
+        max_length=20,
+        required=True,
+        label='Öğrenci soyisim',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control required',
+                'id': 'user_surname',
+                'placeholder': 'Öğrenci soyismini girin',
+                'readonly': 'readonly'
+            }))
+    text = forms.CharField(
+        required=True,
+        label='Bilgilendirme',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control required',
+                'rows': '4',
+                'placeholder': 'Mesajını giriniz'
+            }))
+
+    def clean(self):
+        student_name = self.cleaned_data.get('student_name')
+        student_surname = self.cleaned_data.get('student_surname')
+        in_here = self.cleaned_data.get('in_here')
+        text = self.cleaned_data.get('text')
+        student_id = self.cleaned_data.get('student_id')
+        class_room = self.cleaned_data.get('class_room')
+
+        values = {
+            'student_name': student_name,
+            'student_surname': student_surname,
+            'in_here': in_here,
+            'text': text,
+            'student_id': student_id,
+            'class_room': class_room
+        }
+
+        return values

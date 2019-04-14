@@ -6,44 +6,26 @@
 </head>
 <body>
 
-{% for message in messages %}
-                    <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " style=opacity:0.9 {% endif  %}>
-                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+    <!--{% for message in messages %}-->
+    <!--<div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " style=opacity:0.9 {% endif  %}>-->
+        <!--{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}-->
+        <!--{{ message }}-->
+    <!--</div>-->
+    <!--{% endfor %}-->
 
+    <div class="container">
+    <form method="post"  class="form-group custom-control" action="{% url 'classes:inspection' %}" data-fouc>
+    {% csrf_token %}
+        {% for form in inspection_form %}
+            {{ form.as_p}}
+        {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+        </div>
+    </form>
+</div>
 
 
 </body>
 </html>
 
-
-
-
-<!--index="my-index",-->
-    <!--body={-->
-      <!--"query": {-->
-        <!--"filtered": {-->
-          <!--"query": {-->
-            <!--"bool": {-->
-              <!--"must": [{"match": {"title": "python"}}],-->
-              <!--"must_not": [{"match": {"description": "beta"}}]-->
-            <!--}-->
-          <!--},-->
-          <!--"filter": {"term": {"category": "search"}}-->
-        <!--}-->
-      <!--},-->
-      <!--"aggs" : {-->
-        <!--"per_tag": {-->
-          <!--"terms": {"field": "tags"},-->
-          <!--"aggs": {-->
-            <!--"max_lines": {"max": {"field": "lines"}}-->
-          <!--}-->
-        <!--}-->
-      <!--}-->
-    <!--}-->
-
-
- <!--def __init__(self, obj):-->
-        <!--self.__dict__ = json.loads(obj)-->

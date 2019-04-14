@@ -9,11 +9,15 @@ class NotificationService(object):
         try:
             print('.................notifications/services/save_notification function called')
             if d.values() is not None:
+                print('d: ', d)
                 d['is_read'] = 0
                 d['created_date'] = datetime.now()
-                save_notification = NotificationsDocument(**d).save()
-                if save_notification:
-                    return True
+                save_notification = NotificationsDocument(**d)
+                print('save_notification', save_notification)
+                save = save_notification.save()
+                print('save: ', save)
+                if save:
+                    return save_notification
                 else:
                     raise Exception('error while notification registering')
             else:

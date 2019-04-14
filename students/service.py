@@ -112,3 +112,24 @@ class StudentService(object):
                 raise Exception('dictionary is null')
         except Exception as e:
             print(e)
+
+    def related_classes(self, d):
+        try:
+            print('.................parents/services/personnel_students function called')
+            if d.values() is not None:
+                request = StudentDocument.\
+                    search().\
+                    query(
+                        Q('match_phrase', class_room=d['class_room']) &
+                        Q('match_phrase', company_id=d['company_id']) &
+                        Q('match_phrase', status_id=1)
+                    )
+                result = request.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)

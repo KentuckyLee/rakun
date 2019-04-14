@@ -78,3 +78,18 @@ class ClassService(object):
                 raise Exception('dictionary is null')
         except Exception as e:
             print(e)
+
+    def in_condition(self, d):
+        try:
+            print('.................classes/services/in_condition function called')
+            if d.values() is not None:
+                request = ClassesDocument.search().query(Q('terms', _id=d['id']))
+                result = request.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)

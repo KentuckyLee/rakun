@@ -80,8 +80,6 @@ def login(request):
                     response.set_cookie('company_id', user.company_id)
                     return response
                 elif user.status_id == __STATUS_ACTIVE:
-                    response = redirect('dashboard:index')
-                    response.set_cookie('company_id', user.company_id)
                     user_info = {
                         'user_id': user.meta.id,
                         'phone_number': user.phone_number,
@@ -90,10 +88,16 @@ def login(request):
                         'user_name': user.user_name,
                         'user_surname': user.user_surname,
                         'mail': user.mail,
-                        'category_id': user.category_id
+                        'category_id': user.category_id,
+                        'all_data': user
                     }
+                    if user.category_id == 2:
+                        user_info['personnel_type'] = user.personnel_type
+                    else:
+                        user_info['personnel_type'] = 0
+                    response = redirect('dashboard:index')
+                    response.set_cookie('company_id', user.company_id)
                     Authantication.getInstance().setUser(user_info)
-
                     return response
                 else:
                     messages.info(request, 'Kullanıcı silinmiş.')

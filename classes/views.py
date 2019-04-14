@@ -4,6 +4,8 @@ from Context.ContextView import Authantication
 from classes.forms import NewClassFrom
 from classes.service import ClassService
 from personnel.services import PersonnelService
+from students.service import StudentService
+from students.forms import StudentInspectionForm
 
 
 def index(request):
@@ -17,6 +19,7 @@ def index(request):
             get_pers = PersonnelService().related_class({'class_room': i.meta.id})
             for pers_data in get_pers:
                 personnel_list.append((pers_data.user_name + ' ' + pers_data.user_surname, i.meta.id, pers_data.meta.id))
+        print('all_class: ', all_class)
         context['page_data'] = all_class
         context['personnel_list'] = personnel_list
         return render(request, 'rakun/classes/class_list.html', context)
@@ -42,6 +45,18 @@ def set_new_class(request):
     except Exception as e:
         print(e)
 
+def detail(request, class_id):
+    try:
+        context = Authantication.getInstance().getUser()
+        get_all_students = StudentService().related_classes({'class_room': class_id, 'company_id': request.COOKIES.get('company_id')})
+        context['class_name'] = get_all_students.hits.hits[0]['_source']['class_name']
+        context['class_id'] = get_all_students.hits.hits[0]['_source']['class_room']
+        context['page_data'] = get_all_students
+        context['page'] = 'Sınıflar / ' + get_all_students.hits.hits[0]['_source']['class_name']
+        return render(request, 'rakun/classes/detail.html', context)
+    except Exception as e:
+        print(e)
+
 
 def update(request, class_id=None):
     try:
@@ -49,6 +64,7 @@ def update(request, class_id=None):
         context = Authantication.getInstance().getUser()
         get_class = ClassService().find_by_id({'id': class_id})
         class_data = get_class.hits.hits[0]['_source']
+        print('class_data', class_data)
         class_form = NewClassFrom(data=request.POST or None, initial=class_data)
         if class_form.is_valid():
             form_data = class_form.cleaned_data
@@ -70,5 +86,45 @@ def update(request, class_id=None):
 def delete(request, class_id):
     try:
         pass
+    except Exception as e:
+        print(e)
+
+def related_class(request):
+    try:
+        context = Authantication.getInstance().getUser()
+        user_info = context['all_data']
+        all_class = ClassService().in_condition({'id': user_info.class_room})
+        personnel_list = list()
+        for i in all_class:
+            get_pers = PersonnelService().related_class({'class_room': i.meta.id})
+            for pers_data in get_pers:
+                personnel_list.append(
+                    (pers_data.user_name + ' ' + pers_data.user_surname, i.meta.id, pers_data.meta.id))
+        context['personnel_list'] = personnel_list
+        context['page_data'] = all_class
+        context['class_name'] = 'ali'
+        return render(request, 'rakun/classes/class_list.html', context)
+    except Exception as e:
+        print(e)
+
+
+def inspection(request, class_id=None):
+    try:
+        context = Authantication.getInstance().getUser()
+        user_info = context['all_data']
+        if class_id is not None:
+            get_all_students = StudentService().related_classes(
+            {'class_room': class_id, 'company_id': request.COOKIES.get('company_id')})
+            inspection_form = list()
+            for i in get_all_students:
+                i._d_['student_id'] = i.meta.id
+                inspection_form.append(StudentInspectionForm(data=request.POST or None, initial=i._d_))
+        else:
+            inspection_form = StudentInspectionForm(data=request.POST)
+            if inspection_form.is_valid():
+                data = inspection_form.cleaned_data
+                print('DATA: ', data)
+        context['inspection_form'] = inspection_form
+        return render(request, 'rakun/test.html', context)
     except Exception as e:
         print(e)

@@ -1,0 +1,57 @@
+{% extends "rakun/layout.html" %}
+{% load static %}
+    {% block body%}
+    <!-- Theme JS files -->
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/wizards/steps.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/styling/uniform.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/inputs/inputmask.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/validation/validate.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/extensions/cookie.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/demo_pages/form_wizard.js' %}"></script>
+    <script src="{% static 'rakun/global_assets/js/demo_pages/form_checkboxes_radios.js' %}"></script>
+    <script src="{% static 'rakun/global_assets/js/plugins/forms/styling/switchery.min.js' %}"></script>
+    <script src="{% static 'rakun/global_assets/js/plugins/forms/styling/switch.min.js' %}"></script>
+    <script src="{% static 'rakun/global_assets/js/demo_pages/form_multiselect.js' %}"></script>
+
+	<!-- /theme JS files -->
+      <!-- Basic setup -->
+	            <div class="card">
+					<div class="card-header bg-white header-elements-inline">
+						<h6 class="card-title">Bildirim Gönder</h6>
+						<div class="header-elements">
+							<div class="list-icons">
+		                		<a class="list-icons-item" data-action="collapse"></a>
+		                		<a class="list-icons-item" data-action="reload"></a>
+		                		<a class="list-icons-item" data-action="remove"></a>
+		                	</div>
+	                	</div>
+					</div>
+                    <div class="card-body">
+                        Tüm kullanıcılara yada sadece veli ve personelleri seçerek <strong>toplu</strong> bildirim gönderebilirsiniz.
+                        İsterseniz kullanıcıları tek tek seçerek bildirimleri özel olarak kullanıcılara atayabilirsiniz<br>
+                        <hr>
+                        {% for message in messages %}
+                        <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " style=opacity:0.9 {% endif  %}>
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+					<div class="container">
+						<form method="post"  class="form-group custom-control" action="{% url 'notifications:send_notifications' %}" data-fouc>
+						{% csrf_token %}
+							{{ send_notifications_form.as_p}}
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+							</div>
+						</form>
+					</div>
+
+
+	            </div>
+	            <!-- /basic setup -->
+
+    {% endblock body%}

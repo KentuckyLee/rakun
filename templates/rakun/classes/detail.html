@@ -1,0 +1,75 @@
+{% extends "rakun/layout.html" %}
+	{% load static %}
+    {% block body%}
+    <!-- Theme JS files -->
+	<script src="{% static 'rakun/global_assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/plugins/forms/selects/select2.min.js' %}"></script>
+	<script src="{% static 'rakun/global_assets/js/demo_pages/datatables_basic.js' %}"></script>
+	<!-- /theme JS files -->
+
+
+	<!-- Basic datatable -->
+	<div class="card">
+		<div class="card-header header-elements-inline">
+			<h5 class="card-title">{{class_name}} Sınıfı</h5>
+			<div class="col-md-3 col-sm-4">
+				<div class="d-flex align-items-center">
+					<a href="{% url 'classes:inspection' class_id %}" class="dropdown-item">
+						<i class="icon-user-plus mr-3 icon-1x"></i>
+						Yoklama Al
+					 </a>
+				</div>
+			</div>
+			<div class="header-elements">
+				<div class="list-icons">
+					<a class="list-icons-item" data-action="collapse"></a>
+					<a class="list-icons-item" data-action="reload"></a>
+					<a class="list-icons-item" data-action="remove"></a>
+				</div>
+			</div>
+		</div>
+
+		<!--<div class="card-body">-->
+			<!--Sisteme kayıtlı tüm sınıfların listesi burada görüntülenir. Sınıflar üzerinde özel işlem-->
+			<!--yapmak için <strong>İşlem</strong> ikonunu kullanabilirsiniz.<br><br>-->
+			<!--<div class="col-md-3 col-sm-4">-->
+				<!--<div class="d-flex align-items-center">-->
+
+				<!--</div>-->
+			<!--</div>-->
+			<!--{% for message in messages %}-->
+			<!--<div {% if message.tags %} class="alert alert-{{ message.tags }} text-center " style=opacity:0.9 {% endif  %}>-->
+				<!--{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}-->
+				<!--{{ message }}-->
+			<!--</div>-->
+			<!--{% endfor %}-->
+		<!--</div>-->
+
+		<table class="table datatable-basic">
+			<thead>
+				<tr>
+					<th>Öğrenci İsmi Soyismi</th>
+					<th>Veli ismi</th>
+					<th>Öğrenci Doğum Günü</th>
+					<th>Özel Örenci Durumu</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for students in page_data %}
+				<tr>
+					<td>{{students.student_name}} {{students.student_surname}}</td>
+					<td><a href="{% url 'parents:get_profile' students.parent_id %}"><span class="badge badge-success">{{students.parent}}</span></a></td>
+					<td>{{students.student_birth_date}}</td>
+                    {% if students.private_student == True %}
+                    <td><i class="icon-checkmark2"></i></td>
+                    {% else %}
+                    <td><i class="icon-cross3"></i></td>
+                    {%endif%}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<!-- /basic datatable -->
+
+    {% endblock body%}

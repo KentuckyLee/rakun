@@ -53,7 +53,7 @@
 			<tbody>
 				{% for class in page_data %}
 				<tr>
-					<td>{{class.class_name}}</td>
+					<td><a href="{% url 'classes:detail' class.meta.id %}">{{class.class_name}}</a></td>
 					<td>{{class.quota}}</td>
 					<td>{{class.quota}} / {{class.registered_student}}</td>
 

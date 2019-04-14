@@ -69,6 +69,71 @@ class UsersService(object):
         except Exception as e:
             print(e)
 
+    def get_all_user(self, d):
+        print('...............companies/service/get_all_user function called.')
+        try:
+            # None control
+            if d.values() is not None:
+                query = UsersDocument. \
+                    search(). \
+                    query(
+                        Q('match_phrase', company_id=d['company_id']) &
+                        Q('match_phrase', status_id=1)
+                    )
+                result = query.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
+    def get_all_personnel(self, d):
+        print('...............companies/service/get_personnel_user function called.')
+        try:
+            # None control
+            if d.values() is not None:
+                query = UsersDocument. \
+                    search(). \
+                    query(
+                        Q('match_phrase', company_id=d['company_id']) &
+                        Q('match_phrase', category_id=2) &
+                        Q('match_phrase', status_id=1)
+                    )
+                result = query.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
+    def get_all_parent(self, d):
+        print('...............companies/service/get_all_parent function called.')
+        try:
+            # None control
+            if d.values() is not None:
+                query = UsersDocument. \
+                    search(). \
+                    query(
+                        Q('match_phrase', company_id=d['company_id']) &
+                        Q('match_phrase', category_id=3) &
+                        Q('match_phrase', status_id=1)
+                    )
+                result = query.execute()
+                if result.hits.total != 0:
+                    return result
+                else:
+                    return None
+            else:
+                raise Exception('dictionary is null')
+        except Exception as e:
+            print(e)
+
     def get_user(self, d):
         print('...............companies/service/get_user function called.')
         try:
